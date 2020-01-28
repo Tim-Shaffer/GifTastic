@@ -35,6 +35,52 @@ function capital_letter(str) {
     return str.join(" ");
 };
 
+// 
+function displayGIFs() {
+
+    var topic = $(this).attr("data-name");
+    var apiKey = "M3ooN7nN7X3rVj16iZAjKOSp3CVkmDev"
+    // https://api.giphy.com/v1/gifs/search?api_key=M3ooN7nN7X3rVj16iZAjKOSp3CVkmDev&q=&limit=25&offset=0&rating=G&lang=en
+    var queryURL = "https://api.giphy.com/v1/gifs/search?api_key=" + apiKey + "&q=" + topic + "&limit=10&offset=0&rating=G&lang=en";
+
+    // Creates AJAX call for the specific movie button being clicked
+    $.ajax({
+      url: queryURL,
+      method: "GET"
+    }).then(function(response) {
+
+        console.log(response);
+
+    //   // Creates a div to hold the movie
+    //   var newDiv = $("<div class='movie'>");
+    //   // Retrieves the Rating Data
+    //   var ratingData = response.Rated;
+    //   // Creates an element to have the rating displayed
+    //   var ratingTag = $("<p>").text("Rating: " + ratingData);
+    //   // Displays the rating
+    //   newDiv.append(ratingTag);
+    //   // Retrieves the release year
+    //   var releaseYear = response.Released;
+    //   // Creates an element to hold the release year
+    //   var yearTag = $("<p>").text("Released: " + releaseYear);
+    //   // Displays the release year
+    //   newDiv.append(yearTag);
+    //   // Retrieves the plot
+    //   var plot = response.Plot;
+    //   // Creates an element to hold the plot
+    //   var plotTag = $("<p>").text("Plot: " + plot);
+    //   // Appends the plot
+    //   newDiv.append(plotTag);
+    //   // Creates an element to hold the image
+    //   var posterTag = $("<img src='" + response.Poster + "'/>")
+    //   // Appends the image
+    //   newDiv.append(posterTag);
+    //   // Puts the entire Movie above the previous movies.
+    //   $("#movies-view").prepend(newDiv);
+    });
+
+  }
+
 // This function handles events where one button is clicked
 $("#add-button").on("click", function(event) {
     // event.preventDefault() prevents the form from trying to submit itself.
@@ -57,6 +103,10 @@ $("#add-button").on("click", function(event) {
     // calling renderButtons which handles the processing of our topic array
     renderButtons();
 });
+
+// Adding click event listeners to all elements with a class of "topic"
+$(document).on("click", ".topic", displayGIFs);
+
 
 // Calling the renderButtons function at least once to display the initial list of topics
 renderButtons();
