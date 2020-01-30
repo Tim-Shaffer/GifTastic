@@ -1,5 +1,6 @@
-// Initial array of topics
-var topics = ["Tazmanian Devil", "Bugs Bunny", "Daffy Duck", "Elmer Fudd"];
+// Initial array of topics (Cartoon Characters)
+var topics = ["Tazmanian Devil", "Bugs Bunny", "Daffy Duck", "Elmer Fudd", "Tweety", "Foghorn Leghorn", "Porky Pig", "Gossamer", "Lola Bunny", "Marvin the Martian", "Pepé Le Pew"];
+var isInitialized = false;
 
 function renderButtons() {
 
@@ -21,7 +22,24 @@ function renderButtons() {
         a.text(topics[i]);
         // Adding the button to the HTML
         $("#buttons-view").append(a);
-    }
+    };
+
+    
+    if (!isInitialized) {
+
+        // need to add a container around the form to properly space
+        $("#more-buttons-form").wrap('<div class="container">');
+
+        // add a break after the label so that the input box appears under the label
+        $("label").after("<br>");
+
+        // add a break after the input tags for spacing
+        $("input").after("<br>");
+
+        isInitialized = true;
+    
+    };
+
 };
 
 // Found this function on W3 schools - https://www.w3resource.com/javascript-exercises/javascript-basic-exercise-50.php
@@ -43,7 +61,7 @@ function displayGIFs() {
 
     var topic = $(this).attr("data-name");
     var apiKey = "M3ooN7nN7X3rVj16iZAjKOSp3CVkmDev"
-    var queryURL = "https://api.giphy.com/v1/gifs/search?api_key=" + apiKey + "&q=" + topic + "&limit=10&offset=0&rating=G&lang=en";
+    var queryURL = "https://api.giphy.com/v1/gifs/search?api_key=" + apiKey + "&q=cartoon+" + topic + "&limit=10&offset=0&rating=G&lang=en";
 
     // 
     $.ajax({
@@ -104,7 +122,7 @@ $("#add-button").on("click", function(event) {
     $("#button-input").val("");
 
     // Capitalize the first letter of every word in the string
-    topic = capital_letter(topic);
+    topic = capital_letter(topic.toLowerCase());
     
     //  Make Sure the topic doesn't already exist before adding it to the array
     if (topics.indexOf(topic) === -1) {
