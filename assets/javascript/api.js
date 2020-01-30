@@ -77,7 +77,6 @@ function displayGIFs() {
             var imageDiv = $("<div>");
             imageDiv.addClass("stills");
             var cardTitle = $("<p>");
-            // cardTitle.addClass("card-title");
             cardTitle.text("Rating:  " + results[i].rating.toUpperCase());
             var topicImage = $("<img>");
             topicImage.attr("src", results[i].images.fixed_height_small_still.url);
@@ -88,6 +87,7 @@ function displayGIFs() {
             topicImage.addClass("img-thumbnail");
             imageDiv.append(cardTitle);
             imageDiv.append(topicImage);
+            
             $("#gifs-appear-here").prepend(imageDiv.append(topicImage));
 
         };
