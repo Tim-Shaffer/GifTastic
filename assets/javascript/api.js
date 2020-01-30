@@ -38,48 +38,58 @@ function capital_letter(str) {
 // 
 function displayGIFs() {
 
+    // empty out the gif section if already populated
+    $("#gifs-appear-here").empty();
+
     var topic = $(this).attr("data-name");
     var apiKey = "M3ooN7nN7X3rVj16iZAjKOSp3CVkmDev"
-    // https://api.giphy.com/v1/gifs/search?api_key=M3ooN7nN7X3rVj16iZAjKOSp3CVkmDev&q=&limit=25&offset=0&rating=G&lang=en
     var queryURL = "https://api.giphy.com/v1/gifs/search?api_key=" + apiKey + "&q=" + topic + "&limit=10&offset=0&rating=G&lang=en";
 
-    // Creates AJAX call for the specific movie button being clicked
+    // 
     $.ajax({
       url: queryURL,
       method: "GET"
     }).then(function(response) {
 
-        console.log(response);
+        var results = response.data
+        // console.log(results);
 
-    //   // Creates a div to hold the movie
-    //   var newDiv = $("<div class='movie'>");
-    //   // Retrieves the Rating Data
-    //   var ratingData = response.Rated;
-    //   // Creates an element to have the rating displayed
-    //   var ratingTag = $("<p>").text("Rating: " + ratingData);
-    //   // Displays the rating
-    //   newDiv.append(ratingTag);
-    //   // Retrieves the release year
-    //   var releaseYear = response.Released;
-    //   // Creates an element to hold the release year
-    //   var yearTag = $("<p>").text("Released: " + releaseYear);
-    //   // Displays the release year
-    //   newDiv.append(yearTag);
-    //   // Retrieves the plot
-    //   var plot = response.Plot;
-    //   // Creates an element to hold the plot
-    //   var plotTag = $("<p>").text("Plot: " + plot);
-    //   // Appends the plot
-    //   newDiv.append(plotTag);
-    //   // Creates an element to hold the image
-    //   var posterTag = $("<img src='" + response.Poster + "'/>")
-    //   // Appends the image
-    //   newDiv.append(posterTag);
-    //   // Puts the entire Movie above the previous movies.
-    //   $("#movies-view").prepend(newDiv);
+        for (var i = 0; i < results.length; i++) {
+
+            var imageDiv = $("<div>");
+            imageDiv.addClass("stills");
+            var cardTitle = $("<p>");
+            // cardTitle.addClass("card-title");
+            cardTitle.text("Rating:  " + results[i].rating.toUpperCase());
+            var topicImage = $("<img>");
+            topicImage.attr("src", results[i].images.fixed_height_small_still.url);
+            topicImage.attr("data-still", results[i].images.fixed_height_small_still.url);
+            topicImage.attr("data-animate", results[i].images.fixed_height_small.url);
+            topicImage.attr("data-state", "still");
+            topicImage.addClass("gif");
+            topicImage.addClass("img-thumbnail");
+            imageDiv.append(cardTitle);
+            imageDiv.append(topicImage);
+            $("#gifs-appear-here").prepend(imageDiv.append(topicImage));
+
+        };
+
     });
 
-  }
+};
+
+// code taken from Activity 15-PausingGifs
+function animateGIFs() {
+    var state = $(this).attr("data-state");
+
+    if (state === "still") {
+        $(this).attr("src", $(this).attr("data-animate"));
+        $(this).attr("data-state", "animate");
+    } else {
+        $(this).attr("src", $(this).attr("data-still"));
+        $(this).attr("data-state", "still");
+    }
+};
 
 // This function handles events where one button is clicked
 $("#add-button").on("click", function(event) {
@@ -90,10 +100,13 @@ $("#add-button").on("click", function(event) {
     // This line will grab the text from the input box
     var topic = $("#button-input").val().trim();
 
+    // after grabbing the information, remove it from the page 
+    $("#button-input").val("");
+
     // Capitalize the first letter of every word in the string
     topic = capital_letter(topic);
     
-    //  Make Sure the topic doesn't already exist befor adding it to the array
+    //  Make Sure the topic doesn't already exist before adding it to the array
     if (topics.indexOf(topic) === -1) {
         
         // The topic from the textbox is then added to our array
@@ -102,10 +115,14 @@ $("#add-button").on("click", function(event) {
 
     // calling renderButtons which handles the processing of our topic array
     renderButtons();
+
 });
 
 // Adding click event listeners to all elements with a class of "topic"
 $(document).on("click", ".topic", displayGIFs);
+
+// Adding click event listeners for all the images with class of "gif"
+$(document).on("click", ".gif", animateGIFs);
 
 
 // Calling the renderButtons function at least once to display the initial list of topics

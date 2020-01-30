@@ -2,6 +2,16 @@ button,
   div,
   form,
   input {
-    margin: 10px;
+    margin: 4px;
   }
+
+  .stills {
+    display: inline-block;
+   }  
+
+  #more-buttons-form {
+    float: right;
+    text-align: right; 
+  }
+
  
