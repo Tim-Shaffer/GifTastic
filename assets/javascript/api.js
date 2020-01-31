@@ -1,6 +1,7 @@
 // Initial array of topics (Cartoon Characters)
 var topics = ["Tazmanian Devil", "Bugs Bunny", "Daffy Duck", "Elmer Fudd", "Tweety", "Foghorn Leghorn", "Porky Pig", "Gossamer", "Lola Bunny", "Marvin the Martian", "Pepé Le Pew"];
 var isInitialized = false;
+var offset = 0;
 
 function renderButtons() {
 
@@ -53,15 +54,40 @@ function capital_letter(str) {
     return str.join(" ");
 };
 
-// 
-function displayGIFs() {
-
+function initialDisplay() {
+    //  make sure the offset is set to 0 since this is a new set of images
+    offset = 0;
+    
     // empty out the gif section if already populated
     $("#gifs-appear-here").empty();
 
     var topic = $(this).attr("data-name");
+
+    displayGIFs(topic);
+
+};
+
+function additionalDisplay() {
+    var topic = $(this).attr("data-name");
+
+    offset +=10;
+
+    displayGIFs(topic);
+
+}
+
+// 
+function displayGIFs(topic) {
+
+    // //  make sure the offset is set to 0 since this is a new set of images
+    // offset = 0;
+
+    // // empty out the gif section if already populated
+    // $("#gifs-appear-here").empty();
+
+    // var topic = $(this).attr("data-name");
     var apiKey = "M3ooN7nN7X3rVj16iZAjKOSp3CVkmDev"
-    var queryURL = "https://api.giphy.com/v1/gifs/search?api_key=" + apiKey + "&q=cartoon+" + topic + "&limit=10&offset=0&rating=PG-13&lang=en";
+    var queryURL = "https://api.giphy.com/v1/gifs/search?api_key=" + apiKey + "&q=cartoon+" + topic + "&limit=10&offset=" + offset + "&rating=PG-13&lang=en";
 
     // 
     $.ajax({
@@ -96,7 +122,25 @@ function displayGIFs() {
 
         };
 
+        addButton(topic);
+
     });
+
+};
+
+function addButton(topic) {
+    // add button to request more images - remove it first if it already exists so it won't be duplicated
+    $("#add-more").remove();
+    var addButton = $("<button>");
+    addButton.attr({
+        "type": "button",
+        "id": "add-more",
+        "data-name": topic
+    });
+    addButton.addClass("btn btn-secondary");
+    addButton.text("Add More GIFs");
+
+    $("#gifs-appear-here").after(addButton);
 
 };
 
@@ -145,10 +189,14 @@ $("#add-button").on("click", function(event) {
 });
 
 // Adding click event listeners to all elements with a class of "topic"
-$(document).on("click", ".topic", displayGIFs);
+// $(document).on("click", ".topic", displayGIFs);
+$(document).on("click", ".topic", initialDisplay);
 
 // Adding click event listeners for all the images with class of "gif"
 $(document).on("click", ".gif", animateGIFs);
+
+$(document).on("click", "#add-more", additionalDisplay);
+
 
 
 // Calling the renderButtons function at least once to display the initial list of topics
