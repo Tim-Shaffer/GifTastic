@@ -61,7 +61,7 @@ function displayGIFs() {
 
     var topic = $(this).attr("data-name");
     var apiKey = "M3ooN7nN7X3rVj16iZAjKOSp3CVkmDev"
-    var queryURL = "https://api.giphy.com/v1/gifs/search?api_key=" + apiKey + "&q=cartoon+" + topic + "&limit=10&offset=0&rating=G&lang=en";
+    var queryURL = "https://api.giphy.com/v1/gifs/search?api_key=" + apiKey + "&q=cartoon+" + topic + "&limit=10&offset=0&rating=PG-13&lang=en";
 
     // 
     $.ajax({
@@ -70,25 +70,29 @@ function displayGIFs() {
     }).then(function(response) {
 
         var results = response.data
-        // console.log(results);
 
         for (var i = 0; i < results.length; i++) {
 
             var imageDiv = $("<div>");
             imageDiv.addClass("stills");
-            var cardTitle = $("<p>");
-            cardTitle.text("Rating:  " + results[i].rating.toUpperCase());
-            var topicImage = $("<img>");
-            topicImage.attr("src", results[i].images.fixed_height_small_still.url);
-            topicImage.attr("data-still", results[i].images.fixed_height_small_still.url);
-            topicImage.attr("data-animate", results[i].images.fixed_height_small.url);
-            topicImage.attr("data-state", "still");
-            topicImage.addClass("gif");
-            topicImage.addClass("img-thumbnail");
-            imageDiv.append(cardTitle);
-            imageDiv.append(topicImage);
             
-            $("#gifs-appear-here").prepend(imageDiv.append(topicImage));
+            var topicImage = $("<img>");
+            topicImage.attr({
+                "src": results[i].images.fixed_height_small_still.url,
+                "data-still": results[i].images.fixed_height_small_still.url,
+                "data-animate": results[i].images.fixed_height_small.url,
+                "data-state": "still"
+            });
+            topicImage.addClass("gif img-thumbnail");
+
+            var imageCaption = $("<div>"); 
+            imageCaption.text("Rating:  " + results[i].rating.toUpperCase());
+            imageCaption.addClass("caption text-center");
+            
+            imageDiv.append(topicImage);
+            topicImage.after(imageCaption);
+            
+            $("#gifs-appear-here").append(imageDiv);
 
         };
 
