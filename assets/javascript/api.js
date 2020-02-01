@@ -24,8 +24,8 @@ function renderButtons() {
 
         // Then dynamicaly generating buttons for each topic in the array.
         var a = $("<button>");
-        // Adding a class
-        a.addClass("topic");
+        // adding bootstrap class for styling
+        a.addClass("topic btn btn-secondary");
         // Adding a data-attribute with a value of the topic at index i
         a.attr("data-name", topics[i]);
         // Providing the button's text with a value of the topic at index i
