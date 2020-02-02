@@ -47,6 +47,13 @@ function renderButtons() {
         // add a break after the input tags for spacing
         $("input").after("<br>");
 
+        // add section to hold favorites populated on a double-click
+        var favSectionID = $("<div>");
+        favSectionID.attr("id", "fav-section");
+        favSectionID.html('<h6>Double Click An Image to Add Favorites Here</h6>');
+
+        $("#more-buttons-form").append(favSectionID);
+
         // update the variable so that this if statement doesn't run every time and continue to add containers
         isInitialized = true;
     
@@ -274,10 +281,25 @@ $("#add-button").on("click", function(event) {
 $(document).on("click", ".topic", initialDisplay);
 
 // Adding click event listeners for all the images with class of "gif"
-$(document).on("click", ".gif", animateGIFs);
+$(document).on("click", ".gif", animateGIFs)
+
+// setting up a double click event listener to add image to a favorites section.
+$(document).on("dblclick", ".stills", dblClickFav);
 
 // Adding click event listeners for the add-more GIFs button
 $(document).on("click", "#add-more", additionalDisplay);
 
 // Calling the renderButtons function at least once to display the initial list of topics
 renderButtons();
+
+function dblClickFav () {
+    // alert("Dbl Click Occurred");
+    // build a copy of the image to then append to a favorites section.
+    var imgID = $(this);
+    // console.log(imgID);
+
+    imgID.removeClass("stills").addClass("favs");
+
+    $("#fav-section").append(imgID);
+
+}
