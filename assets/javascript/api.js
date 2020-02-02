@@ -50,7 +50,7 @@ function renderButtons() {
         // add section to hold favorites populated on a double-click
         var favSectionID = $("<div>");
         favSectionID.attr("id", "fav-section");
-        favSectionID.html('<br><h6>Double Click An Image to Add Favorites Here</h6>');
+        favSectionID.html('<br><h6>Double Click An Image to Add<br>Favorites Here</h6>');
 
         $("#more-buttons-form").append(favSectionID);
 
