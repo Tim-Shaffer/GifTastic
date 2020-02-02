@@ -124,7 +124,7 @@ function displayGIFs(topic) {
     // set the API key for the app
     var apiKey = "M3ooN7nN7X3rVj16iZAjKOSp3CVkmDev"
     // establish the query with the apiKey, the topic passed into the function, and the global offset variable
-    var queryURL = "https://api.giphy.com/v1/gifs/search?api_key=" + apiKey + "&q=cartoon+" + topic + "&limit=10&offset=" + offset + "&rating=PG-13&lang=en";
+    var queryURL = "https://api.giphy.com/v1/gifs/search?api_key=" + apiKey + "&q=" + topic + "&limit=10&offset=" + offset + "&rating=PG-13&lang=en";
 
     // call the API with the query setup and the 'GET' method (from Class Activities 13-ButtonTriggeredAJAX)
     $.ajax({
@@ -133,6 +133,7 @@ function displayGIFs(topic) {
     }).then(function(response) {
 
         // initialize a local variable to contain the results from the AJAX call
+        
         var results = response.data
 
         // loop through the results and create the html elements for the returned images
