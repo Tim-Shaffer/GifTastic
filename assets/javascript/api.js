@@ -50,7 +50,7 @@ function renderButtons() {
         // add section to hold favorites populated on a double-click
         var favSectionID = $("<div>");
         favSectionID.attr("id", "fav-section");
-        favSectionID.html('<h6>Double Click An Image to Add Favorites Here</h6>');
+        favSectionID.html('<br><h6>Double Click An Image to Add Favorites Here</h6>');
 
         $("#more-buttons-form").append(favSectionID);
 
@@ -152,7 +152,7 @@ function displayGIFs(topic) {
             imageDiv.addClass("stills");
             
             // create a new img element
-            var topicImage = $("<img>");
+            var topicImage = $("<img />");
             // add the necessary attributes to display the GIF as a still and be able to swap between animate and still via a separate function
             topicImage.attr({
                 "src": results[i].images.fixed_height_small_still.url,
@@ -277,6 +277,28 @@ $("#add-button").on("click", function(event) {
 // end of function triggered with the add button
 // --------------------------------------------------------------------------------------
 
+// --------------------------------------------------------------------------------------
+// function called on double click to move the image into the favorites section
+// --------------------------------------------------------------------------------------
+function dblClickFav() {
+    // build a copy of the image to then append to a favorites section.
+    var imgID = $(this);
+    // change the class from stills to favs so the double click will not apply
+    imgID.removeClass("stills").addClass("favs");
+
+    // find the div with the class="caption" 
+    var captionID = $(this.children[1]);
+    // change the bootstrap class from text-center to text-right to align the caption to the right
+    captionID.removeClass("text-center").addClass("text-right");
+    
+    // append the favorite image to the fav-section
+    $("#fav-section").append(imgID);
+
+};
+// --------------------------------------------------------------------------------------
+// end of the dblClickFav() function
+// --------------------------------------------------------------------------------------
+
 // Adding click event listeners to all elements with a class of "topic"
 $(document).on("click", ".topic", initialDisplay);
 
@@ -292,14 +314,3 @@ $(document).on("click", "#add-more", additionalDisplay);
 // Calling the renderButtons function at least once to display the initial list of topics
 renderButtons();
 
-function dblClickFav () {
-    // alert("Dbl Click Occurred");
-    // build a copy of the image to then append to a favorites section.
-    var imgID = $(this);
-    // console.log(imgID);
-
-    imgID.removeClass("stills").addClass("favs");
-
-    $("#fav-section").append(imgID);
-
-}
