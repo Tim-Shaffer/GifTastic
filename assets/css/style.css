@@ -1,15 +1,25 @@
-button,
-  div,
-  form,
-  input {
-    margin: 4px;
-  }
+button, 
+input {
+ margin: 4px;
+}
 
-  .stills {
-    display: inline-block;
-   }  
+#buttons-view {
+margin: 4px;
+}
 
-  #more-buttons-form {
-    float: right;
-    text-align: right; 
-  }
+.stills {
+display: inline-block;
+}  
+
+#more-buttons-form {
+float: right;
+text-align: right; 
+}
+
+.favs {
+display: inline-block;
+} 
+
+#fav-section {
+    text-align: center; 
+}

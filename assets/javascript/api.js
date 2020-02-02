@@ -38,8 +38,11 @@ function renderButtons() {
     // for layout and moving the more-buttons-form section to the right side, wrap a container around the form
     if (!isInitialized) {
 
-        // add a container class around the form
-        $("#more-buttons-form").wrap('<div class="container">');
+        // add the col-sm-8 class to the gifs-appear-here div
+        $("#gifs-appear-here").addClass("col-sm-8")
+        
+        // wrap the gifs-appear-here id with a row div
+        $("#gifs-appear-here").wrap('<div class="row mx-0">');
 
         // add a break after the label so that the input box appears under the label
         $("label").after("<br>");
@@ -49,10 +52,33 @@ function renderButtons() {
 
         // add section to hold favorites populated on a double-click
         var favSectionID = $("<div>");
-        favSectionID.attr("id", "fav-section");
-        favSectionID.html('<br><h6>Double Click An Image to Add<br>Favorites Here</h6>');
 
-        $("#more-buttons-form").append(favSectionID);
+        // add an id to the section
+        favSectionID.attr("id", "fav-section");
+
+        // add some html to format the heading with how to populate the section
+        favSectionID.html('<br><h5>Double Click An Image to Add<br>Favorites Here</h5>');
+
+        // add a container class and border around the fav-section
+        favSectionID.addClass("container border border-secondary");
+
+        // create a local variable for the more-buttons-form id
+        var moreButtonsID = $("#more-buttons-form")
+
+        // add the col-sm-4 class to the form
+        moreButtonsID .addClass("col-sm-4");
+        
+        // append the more-buttons element to the row class - there is only 1!
+        $(".row").append(moreButtonsID);
+
+        // append the fav-section to the more-buttons section so they appear in the same columns
+        moreButtonsID.append(favSectionID);
+
+        // hide the fav-section until there are images available to add to it!
+        favSectionID.hide();
+
+        // add a container class around the row 
+        $(".row").wrap('<div class="container mx-0">')
 
         // update the variable so that this if statement doesn't run every time and continue to add containers
         isInitialized = true;
@@ -99,6 +125,9 @@ function initialDisplay() {
 
     // call the function that links to the API with a specific topic
     displayGIFs(topic);
+
+    // show the new section to hold favorites
+    $("#fav-section").show();
 
 };
 // --------------------------------------------------------------------------------------
@@ -207,12 +236,12 @@ function addButton(topic) {
     });
 
     // add bootstrap classes to the button
-    addButton.addClass("btn btn-secondary");
+    addButton.addClass("btn btn-warning");
     // add the text to label the button
     addButton.text("Add More GIFs");
 
-    // add the button element after the 'gifs-appear-here' div
-    $("#gifs-appear-here").after(addButton);
+    // append the button element to the 'gifs-appear-here' div
+    $("#gifs-appear-here").append(addButton);
 
 };
 // --------------------------------------------------------------------------------------
@@ -285,11 +314,6 @@ function dblClickFav() {
     var imgID = $(this);
     // change the class from stills to favs so the double click will not apply
     imgID.removeClass("stills").addClass("favs");
-
-    // find the div with the class="caption" 
-    var captionID = $(this.children[1]);
-    // change the bootstrap class from text-center to text-right to align the caption to the right
-    captionID.removeClass("text-center").addClass("text-right");
     
     // append the favorite image to the fav-section
     $("#fav-section").append(imgID);
