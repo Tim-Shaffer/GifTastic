@@ -10,6 +10,12 @@ var isInitialized = false;
 // initialize a variable to hold the current offset for the ajax call so more gifs can be added later
 var offset = 0;
 
+// initialize an array to hold the instruction lines for the initial page load
+var instructions = ["Welcome to Gif-Tastic",
+    "Click on any of the above Cartoon Characters to display some GIFs",
+    "When the GIFs are available, click on them to animate and then again to stop the animation", 
+    "Enter a new Cartoon Character to the right and Click the 'Add New' button to add your own character to the list",
+    "Double-clicking on a GIF will move that GIF into a Favorites Section"];
 // --------------------------------------------------------------------------------------
 // function to generate the 'topic' buttons from the array of topics (from Class Activities 07-MovieButtonLayout)
 // --------------------------------------------------------------------------------------
@@ -37,6 +43,9 @@ function renderButtons() {
     
     // for layout and moving the more-buttons-form section to the right side, wrap a container around the form
     if (!isInitialized) {
+
+        // display the instructions on the initial load 
+        showInstructions(0);
 
         // add the col-sm-8 class to the gifs-appear-here div
         $("#gifs-appear-here").addClass("col-sm-8")
@@ -322,6 +331,51 @@ function dblClickFav() {
 // --------------------------------------------------------------------------------------
 // end of the dblClickFav() function
 // --------------------------------------------------------------------------------------
+
+// --------------------------------------------------------------------------------------
+// function to show the instructions for the page into a Jumbotron
+// --------------------------------------------------------------------------------------
+function showInstructions() {
+
+    // make sure to start with a clear section for the display
+    $('#gifs-appear-here').empty();
+
+    // set a variable to the gifs-appear-here section to use that section for the instructions
+    var display = $('#gifs-appear-here');
+    // add the jumbotron class for spacing and display
+    display.addClass("jumbotron");
+    // create a welcome tag 
+    var welcome = $("<h1>");
+    // add the display-4 class
+    welcome.addClass("display-4");
+    // add the welcome message
+    welcome.text(instructions[0]);
+    // add a line in between the welcome and the rest of the instructions
+    welcome.append('<hr class="my-4">');
+    display.append(welcome);
+
+    // set a variable for the unordered list of messages
+    var listTag = $("<ul>");
+    // loop through the remaining instructions
+    for (i=1; i < instructions.length; i++) {
+        // create a new listItemTag
+        var listItemTag = $("<li>");
+        // add the instruction from the array to the text
+        listItemTag.text(instructions[i]);
+        // add the list item to the unordered list
+        listTag.append(listItemTag);
+        // add the updated list to the display area
+        display.append(listTag);
+    };
+
+};
+// --------------------------------------------------------------------------------------
+// end of the showInstructions() function
+// --------------------------------------------------------------------------------------
+
+function displayLine(idx) {
+    $('#gifs-appear-here').html('<h2>' + instructions[idx] + '</h2>');
+}
 
 // Adding click event listeners to all elements with a class of "topic"
 $(document).on("click", ".topic", initialDisplay);
