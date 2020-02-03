@@ -51,7 +51,7 @@ Using the GIPHY API to make a dynamic web page that populates with GIFs
 
 * Functionality within the page is done within the api.js file and the html used is very minimal as shown by viewing the page source below:
 
-    ![Image of Page Source Screenshot](/assets/images/Page_source_Screen.jpg)
+    ![Image of Page Source Screenshot](/assets/images/Page_Source_Screen.jpg)
 
 
 
