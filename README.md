@@ -27,7 +27,7 @@ Using the GIPHY API to make a dynamic web page that populates with GIFs
 1. A form is available on the page to allow the user to add more Cartoon Characters.
     1. When the user clicks the **"Add New"** button or hits enter, the new topic is added to the initial array and the page is updated with a new button to correspond to the new topic.
 
-### Bonus Items:
+### Additional Items:
 * As the GIFs are loaded to the page, a button is also added to allow the user to **"Add More GIFs"** to the page.
     * Clicking this button will add different GIFs to the page in increments of 10.  The existing GIFs will remain on the page.
 
@@ -39,5 +39,13 @@ Using the GIPHY API to make a dynamic web page that populates with GIFs
     ![Image of Persisted Favorite GIFs Screenshot](/assets/images/Favorite_Persist_Screen.jpg)
 
     * The animate feature will still work on the images in the favorites section as described above.
+
+
+# Note:
+
+* Functionality within the page is done within the api.js file and the html used is very minimal as shown by viewing the page source below:
+
+    ![Image of Page Source Screenshot](/assets/images/Page_source_Screen.jpg)
+
 
 
