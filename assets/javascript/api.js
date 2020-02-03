@@ -16,6 +16,7 @@ var instructions = ["Welcome to Gif-Tastic",
     "When the GIFs are available, click on them to animate and then again to stop the animation", 
     "Enter a new Cartoon Character to the right and Click the 'Add New' button to add your own character to the list",
     "Double-clicking on a GIF will move that GIF into a Favorites Section"];
+
 // --------------------------------------------------------------------------------------
 // function to generate the 'topic' buttons from the array of topics (from Class Activities 07-MovieButtonLayout)
 // --------------------------------------------------------------------------------------
@@ -346,12 +347,13 @@ function showInstructions() {
     display.addClass("jumbotron bg-white");
     // create a welcome tag 
     var welcome = $("<h1>");
-    // add the display-4 class
+    // add the display-4 and text-primary classes
     welcome.addClass("display-4 text-primary");
-    // add the welcome message
+    // add the welcome message - the first message in the instructions array
     welcome.text(instructions[0]);
     // add a line in between the welcome and the rest of the instructions
     welcome.append('<hr class="my-4">');
+    // append the welcome message to the display div
     display.append(welcome);
 
     // set a variable for the unordered list of messages
@@ -366,7 +368,7 @@ function showInstructions() {
         listItemTag.text(instructions[i]);
         // add the list item to the unordered list
         listTag.append(listItemTag);
-        // add the updated list to the display area
+        // add the updated list to the display div
         display.append(listTag);
     };
 
@@ -375,9 +377,6 @@ function showInstructions() {
 // end of the showInstructions() function
 // --------------------------------------------------------------------------------------
 
-function displayLine(idx) {
-    $('#gifs-appear-here').html('<h2>' + instructions[idx] + '</h2>');
-}
 
 // Adding click event listeners to all elements with a class of "topic"
 $(document).on("click", ".topic", initialDisplay);
