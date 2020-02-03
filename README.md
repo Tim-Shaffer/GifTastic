@@ -8,6 +8,12 @@ Using the GIPHY API to make a dynamic web page that populates with GIFs
 * JavaScript
 * jQuery
 
+## Contents
+* [Default Page - index.html](https://github.com/Tim-Shaffer/GifTastic#default-page---indexhtml)
+* [Instructions](https://github.com/Tim-Shaffer/GifTastic#instructions)
+* [Additional Items](https://github.com/Tim-Shaffer/GifTastic#additional-items)
+* [Note](https://github.com/Tim-Shaffer/GifTastic#note)
+
 ## Default Page - index.html
 * Link directly to the page here:  https://tim-shaffer.github.io/GifTastic/
 
