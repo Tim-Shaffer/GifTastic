@@ -342,12 +342,12 @@ function showInstructions() {
 
     // set a variable to the gifs-appear-here section to use that section for the instructions
     var display = $('#gifs-appear-here');
-    // add the jumbotron class for spacing and display
-    display.addClass("jumbotron");
+    // add the jumbotron and bg-white classes for spacing and display
+    display.addClass("jumbotron bg-white");
     // create a welcome tag 
     var welcome = $("<h1>");
     // add the display-4 class
-    welcome.addClass("display-4");
+    welcome.addClass("display-4 text-primary");
     // add the welcome message
     welcome.text(instructions[0]);
     // add a line in between the welcome and the rest of the instructions
@@ -360,6 +360,8 @@ function showInstructions() {
     for (i=1; i < instructions.length; i++) {
         // create a new listItemTag
         var listItemTag = $("<li>");
+        // add the text-info class to the listItemTag
+        listItemTag.addClass("text-info");
         // add the instruction from the array to the text
         listItemTag.text(instructions[i]);
         // add the list item to the unordered list
