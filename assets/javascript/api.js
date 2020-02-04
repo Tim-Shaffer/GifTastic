@@ -2,7 +2,7 @@
 //  GLOBAL VARIABLES
 // --------------------------------------------------------------------------------------
 // Initial array of topics (Cartoon Characters)
-var topics = ["Tazmanian Devil", "Bugs Bunny", "Daffy Duck", "Elmer Fudd", "Tweety", "Foghorn Leghorn", "Porky Pig", "Gossamer", "Lola Bunny", "Marvin the Martian", "Pepé Le Pew"];
+var list = ["Tazmanian Devil", "Bugs Bunny", "Daffy Duck", "Elmer Fudd", "Tweety", "Foghorn Leghorn", "Porky Pig", "Gossamer", "Lola Bunny", "Marvin the Martian", "Pepé Le Pew"];
 
 // initialize a variable to control whether or not the container should be added around the add-button area
 var isInitialized = false;
@@ -25,6 +25,20 @@ function renderButtons() {
     // Deleting the buttons prior to adding new buttons
     // (this is necessary otherwise we will have repeat buttons)
     $("#buttons-view").empty();
+
+    // --------------------------------------------------------------------------------------
+    // ---- use of localstorage for the initial array from Class Session 07, Activity 08-todolist-localstorage
+    // Load the topicsList from localstorage.
+    // use JSON.parse to turn the string retrieved  from an array into a string
+    var topics = JSON.parse(localStorage.getItem("topicsList"));
+
+    // Check to see if the topicsList exists in localStorage and is an array currently
+    // If not, set a local list variable to the original list of topics array
+    // Otherwise list is our current list of todos
+    if (!Array.isArray(topics)) {
+        topics = list;
+    }
+    // --------------------------------------------------------------------------------------
 
     // Looping through the array of topics
     for (var i = 0; i < topics.length; i++) {
@@ -302,10 +316,17 @@ $("#add-button").on("click", function(event) {
     topic = capital_letter(topic.toLowerCase());
     
     //  Make Sure the topic doesn't already exist before adding it to the array
-    if (topics.indexOf(topic) === -1) {
+    if (list.indexOf(topic) === -1) {
         
         // The topic from the textbox is then added to our array
-        topics.push(topic);
+        list.push(topic);
+
+        // --------------------------------------------------------------------------------------
+        // ---- use of localstorage for the initial array from Class Session 07, Activity 08-todolist-localstorage
+        // Save the topicsList into localstorage.
+        // We need to use JSON.stringify to turn the list from an array into a string
+        localStorage.setItem("topicsList", JSON.stringify(list));
+        // --------------------------------------------------------------------------------------
     };
 
     // calling renderButtons which handles the processing of our topic array
