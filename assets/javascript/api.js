@@ -34,7 +34,7 @@ function renderButtons() {
 
     // Check to see if the topicsList exists in localStorage and is an array currently
     // If not, set a local list variable to the original list of topics array
-    // Otherwise list is our current list of todos
+    // Otherwise list is our current list of characters
     if (!Array.isArray(topics)) {
         topics = list;
     }
@@ -74,17 +74,41 @@ function renderButtons() {
         // add a break after the input tags for spacing
         $("input").after("<br>");
 
-        // add section to hold favorites populated on a double-click
-        var favSectionID = $("<div>");
+        // check if there is a favorites section residing in localStorage
+        if (localStorage.getItem("favorites")===null) {
+            // add section to hold favorites populated on a double-click
+            var favSectionID = $("<div>");
 
-        // add an id to the section
-        favSectionID.attr("id", "fav-section");
+            // add an id to the section
+            favSectionID.attr("id", "fav-section");
 
-        // add some html to format the heading with how to populate the section
-        favSectionID.html('<br><h5>Double Click An Image to Add<br>Favorites Here</h5>');
+            // add some html to format the heading with how to populate the section
+            favSectionID.html('<br><h5>Double Click An Image to Add<br>Favorites Here</h5>');
 
-        // add a container class and border around the fav-section
-        favSectionID.addClass("container border border-secondary");
+            // add a container class and border around the fav-section
+            favSectionID.addClass("container border border-secondary");
+        }
+
+        else {
+            // --------------------------------------------------------------------------------------
+            // ---- from Class Session 07, Activity 08-todolist-localstorage
+            // load the favorites from localstorage.
+            // use JSON.parse to turn the string retrieved from an array into a string
+            var favoriteList = JSON.parse(localStorage.getItem("favorites"));
+
+            // --------------------------------------------------------------------------------------
+            // add section to hold favorites
+            var favSectionID = $("<div>");
+
+            // add an id to the section
+            favSectionID.attr("id", "fav-section");
+
+            // append the favorite images from local storage to the fav-section
+            for (i=0; i < favoriteList.length; i++) {
+                favSectionID.append(favoriteList[i]);
+            };
+            
+        };
 
         // create a local variable for the more-buttons-form id
         var moreButtonsID = $("#more-buttons-form")
@@ -349,6 +373,9 @@ function dblClickFav() {
     // append the favorite image to the fav-section
     $("#fav-section").append(imgID);
 
+    // add a function to put information into local storage
+    addImageToLocalStorage();
+
 };
 // --------------------------------------------------------------------------------------
 // end of the dblClickFav() function
@@ -398,6 +425,42 @@ function showInstructions() {
 // end of the showInstructions() function
 // --------------------------------------------------------------------------------------
 
+// --------------------------------------------------------------------------------------
+//  function will add the details of the favorite image to be stored in local Storage
+// --------------------------------------------------------------------------------------
+function addImageToLocalStorage(){
+    // --------------------------------------------------------------------------------------
+    // ---- use of localstorage for the initial array from Class Session 07, Activity 08-todolist-localstorage
+    // load the favorites from localstorage.
+    // use JSON.parse to turn the string retrieved from an array into a string
+    var favoriteList = JSON.parse(localStorage.getItem("favorites"));
+
+    // Check to see if the favoriteList exists in localStorage and is an array currently
+    // If not, set a local favoriteList variable to an empty array
+    // Otherwise favoriteList is our current list of favorites
+    if (!Array.isArray(favoriteList)) {
+        favoriteList = [];
+        favoriteList.push($("#fav-section").html());
+    } else {
+        
+        favoriteList[0] = ($("#fav-section").html());
+
+    };
+
+    localStorage.setItem("favorites", JSON.stringify(favoriteList));
+    // --------------------------------------------------------------------------------------
+
+    $("#fav-section").empty();
+
+    for (i=0; i < favoriteList.length; i++) {
+        // append the favorite image to the fav-section
+        $("#fav-section").append(favoriteList[i]);
+    };
+    
+};
+// --------------------------------------------------------------------------------------
+// end of the addImageToLocalStorage() function
+// --------------------------------------------------------------------------------------
 
 // Adding click event listeners to all elements with a class of "topic"
 $(document).on("click", ".topic", initialDisplay);
@@ -413,4 +476,3 @@ $(document).on("click", "#add-more", additionalDisplay);
 
 // Calling the renderButtons function at least once to display the initial list of topics
 renderButtons();
-
