@@ -46,12 +46,15 @@ Using the GIPHY API to make a dynamic web page that populates with GIFs
 
     * The animate feature will still work on the images in the favorites section as described above.
 
+* The initial list of characters and the favorite images will be persisted in local storage to be available the next time the user accesses the page.
+
 
 # Note:
 
 * Functionality within the page is done within the api.js file and the html used is very minimal as shown by viewing the page source below:
 
     ![Image of Page Source Screenshot](/assets/images/Page_Source_Screen.jpg)
+
 
 
 
