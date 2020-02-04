@@ -103,6 +103,9 @@ function renderButtons() {
             // add an id to the section
             favSectionID.attr("id", "fav-section");
 
+            // add a container class and border around the fav-section
+            favSectionID.addClass("container border border-secondary");
+
             // append the favorite images from local storage to the fav-section
             for (i=0; i < favoriteList.length; i++) {
                 favSectionID.append(favoriteList[i]);
